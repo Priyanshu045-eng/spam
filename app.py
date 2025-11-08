@@ -3,18 +3,14 @@ from pydantic import BaseModel
 from typing import Dict
 import re
 
-# ---------------- Classifier -----------------
 class TextClassifier:
     def __init__(self):
-        # Spam keywords
         self.spam_keywords = [
             "win", "won", "free", "offer", "click", "subscribe", "buy now", "lottery", "claim", "discount",
             "money", "deal", "sale", "limited time", "urgent", "act now", "gift", "bonus", "credit card",
             "loan", "investment", "earn", "bitcoin", "crypto", "forex", "guaranteed", "reward", "signup",
             "follow back", "followers", "promote", "sponsor", "giveaway", "link in bio", "order now"
         ]
-
-        # Abusive words
         self.abusive_words = [
             "stupid", "idiot", "fool", "dumb", "trash", "hate", "moron", "useless", "loser", "crap",
             "bastard", "ugly", "nonsense", "shut up", "kill", "disgusting", "suck", "jerk", "annoying",
@@ -26,7 +22,6 @@ class TextClassifier:
 
         ]
 
-        # Normal/common chat/comment words
         self.normal_chat_words = [
             "hello", "hi", "hey", "good morning", "good night", "good evening", "how are you", "what's up",
             "thank you", "thanks", "please", "ok", "sure", "yes", "no", "fine", "great", "awesome",
@@ -67,12 +62,10 @@ class TextClassifier:
         }
 
 
-# ---------------- FastAPI App -----------------
 app = FastAPI(title="Chat Text Classifier API", version="1.0")
 
 classifier = TextClassifier()
 
-# Input model
 class TextInput(BaseModel):
     text: str
 
@@ -87,3 +80,4 @@ def predict_text(input_data: TextInput):
     """Predict whether text is Normal, Spam, or Abusive."""
     result = classifier.predict(input_data.text)
     return result
+
